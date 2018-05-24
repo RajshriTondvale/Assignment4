@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title> Quotes </title>
+		<meta charset="utf-8">
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+		<style>
+			.container
+			{
+				margin-top:40px;
+				margin-bottom:30px;
+				background-color:#a22222;
+				
+			}
+			
+			.box1
+			{
+				height:550px;	
+			}
+			
+			h1,h3
+			{
+				color:white;
+			}
+			
+			hr
+			{
+				border-bottom:2px dotted white;
+				width:500px;
+			}
+			
+			
+		</style>
+	</head>
+		<body onload="getQuotes()">
+			<div class="container">
+				<div class="box1">
+					<h1 class="text-center">Quotes of the day..!!</h1>
+					<hr>
+						<h3 class ="text-center" id="display" ></h3>
+				</div>
+			</div>
+			<script>
+		 async function getQuotes()
+		 {
+			try
+			{
+				const result=await fetch('http://quotes.rest/qod.json');
+				const data= await result.json();
+				const today= data.contents.quotes[0];
+				document.getElementById("display").innerHTML= "!!.."+today.quote + "...!!";
+				}
+			catch(error)
+			{
+				alert(error);
+			}
+		 }
+			</script>
+		</body>
+</html>

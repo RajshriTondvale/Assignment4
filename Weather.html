@@ -1,0 +1,72 @@
+<!DOCTYPE html>
+<html>
+	<head>
+		<title>Weather</title>
+		<meta charset="utf-8">
+		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
+		<style>
+			
+			.blue
+			{
+				background-color:lightblue;
+				margin:50px;
+			}
+		</style>
+	</head>
+		<body onload="getMyLocation()">
+				<div>
+					<h1 class ="text-center">Do you know the temperature at Your location.???</h1>
+				</div>
+			<div class="box blue">
+				
+				<h2 class="text-center" id="demo"></h2>
+			</div>
+			<script>
+				var latitude;
+				var longitude;
+				var location;
+				function getMyLocation()
+				{
+					
+					if (navigator.geolocation)
+					{
+						navigator.geolocation.watchPosition(showPosition);
+			
+					} 	
+					else 
+					{
+						location.innerHTML = "Geolocation is not supported by this browser.";
+					}
+					
+				}
+				 async function showPosition(position)
+				{
+					latitude = position.coords.latitude ;
+					longitude = position.coords.longitude;
+					try
+						{		
+													
+							const pos = await fetch(`https://api.openweathermap.org/data/2.5/weather?lat=${latitude}&lon=${longitude}&APPID=c05077b06a2ba16c7754beba9a1fbd09`);
+							const data =  await pos.json();
+							//console.log(data);
+							const today= (data.main.temp-273.15).toFixed(2);
+							const city= data.name;
+							//console.log(city);
+							const humidity= data.main.humidity;
+							//console.log(humidity);
+							//console.log(latitude);
+							//console.log(longitude);
+							//console.log(today);
+							document.getElementById("demo").innerHTML= "Today's Temperature at :"  +city+  "  is  "  +today+ '<br> '+"and Humadity is:  "+humidity;
+						}
+						catch(error)
+						{
+							alert (error);
+						}
+						
+				}
+				
+				
+				</script>
+		</body>
+</html>
