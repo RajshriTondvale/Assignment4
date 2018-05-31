@@ -3,6 +3,7 @@
 	<head>
 		<title> Quotes </title>
 		<meta charset="utf-8">
+		<meta name="viewport" content="width=device-width, initial-scale=1.0">
 		<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0/css/bootstrap.min.css">
 		<style>
 			.container
@@ -41,20 +42,24 @@
 				</div>
 			</div>
 			<script>
-		 async function getQuotes()
-		 {
-			try
+		 function getQuotes()
 			{
-				const result=await fetch('http://quotes.rest/qod.json');
-				const data= await result.json();
-				const today= data.contents.quotes[0];
-				document.getElementById("display").innerHTML= "!!.."+today.quote + "...!!";
-				}
-			catch(error)
-			{
-				alert(error);
+				fetch('http://quotes.rest/qod.json')
+				.then(result=>{
+					return result.json();
+					console.log(result);
+				})
+				.then(data=>
+				{
+					
+					console.log(data);
+					const quotes= data.contents.quotes[0];
+					console.log(quotes.quote);
+					document.getElementById("display").innerHTML=quotes.quote;
+				
+				})
+				.catch(error => console.log(error));
 			}
-		 }
 			</script>
 		</body>
 </html>
